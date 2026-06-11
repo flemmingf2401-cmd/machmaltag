@@ -26,4 +26,3 @@ dist-ssr
 .vercel
 .claude/settings.json
 .claude/settings.local.json
-.github/workflows/ci.yml

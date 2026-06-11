@@ -6,6 +6,10 @@
  * bis Supabase CLI auto-generation eingerichtet ist.
  */
 
+// ==================
+// Database-Interface (Supabase Client v2 Format)
+// ==================
+
 export interface Database {
   public: {
     Tables: {
@@ -13,43 +17,61 @@ export interface Database {
         Row: OrganisationZeile
         Insert: OrganisationEinfuegen
         Update: OrganisationAktualisierung
+        Relationships: []
       }
       benutzer: {
         Row: BenutzerZeile
         Insert: BenutzerEinfuegen
         Update: BenutzerAktualisierung
+        Relationships: Array<{
+          foreignKeyName: string
+          columns: string[]
+          isOneToOne: boolean
+          referencedRelation: string
+          referencedColumns: string[]
+        }>
       }
       fahrzeugtypen: {
         Row: FahrzeugtypZeile
         Insert: FahrzeugtypEinfuegen
         Update: FahrzeugtypAktualisierung
+        Relationships: []
       }
       kostenvorlagen: {
         Row: KostenvorlageZeile
         Insert: KostenvorlageEinfuegen
         Update: KostenvorlageAktualisierung
+        Relationships: []
       }
       persoenliche_anpassungen: {
         Row: PersoenlicheAnpassungZeile
         Insert: PersoenlicheAnpassungEinfuegen
         Update: PersoenlicheAnpassungAktualisierung
+        Relationships: []
       }
       maut_tabelle: {
         Row: MautTabelleZeile
         Insert: MautTabelleEinfuegen
         Update: MautTabelleAktualisierung
+        Relationships: []
       }
       bewertete_angebote: {
         Row: BewertetesAngebotZeile
         Insert: BewertetesAngebotEinfuegen
         Update: BewertetesAngebotAktualisierung
+        Relationships: []
       }
       diesel_preise: {
         Row: DieselPreisZeile
         Insert: DieselPreisEinfuegen
         Update: DieselPreisAktualisierung
+        Relationships: []
       }
     }
+    Views: Record<string, never>
+    Functions: Record<string, never>
+    Enums: Record<string, never>
+    CompositeTypes: Record<string, never>
   }
 }
 

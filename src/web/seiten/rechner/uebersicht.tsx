@@ -11,8 +11,28 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter }
 import { Badge } from '@/komponenten/ui'
 import { Container } from '@/komponenten/ui'
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@/komponenten/ui/select'
+import { Separator } from '@/komponenten/ui/separator'
 import { useToast } from '@/komponenten/ui/toast'
-import { Copy, AlertCircle, CheckCircle2, Loader2, Fuel, User, Route, Wrench } from 'lucide-react'
+import { Copy, AlertCircle, CheckCircle2, Loader2 } from 'lucide-react'
+
+/** Icon je Kostentreiber-Kategorie */
+function KostentreiberIcon({ bezeichnung }: { bezeichnung: string }) {
+  const iconKlasse = 'h-4 w-4 text-text-secondary shrink-0'
+
+  if (bezeichnung.toLowerCase().includes('diesel') || bezeichnung.toLowerCase().includes('kraftstoff')) {
+    return <Fuel className={iconKlasse} />
+  }
+  if (bezeichnung.toLowerCase().includes('fahrer') || bezeichnung.toLowerCase().includes('personal')) {
+    return <User className={iconKlasse} />
+  }
+  if (bezeichnung.toLowerCase().includes('maut') || bezeichnung.toLowerCase().includes('toll')) {
+    return <Route className={iconKlasse} />
+  }
+  if (bezeichnung.toLowerCase().includes('fix') || bezeichnung.toLowerCase().includes('sonst')) {
+    return <Wrench className={iconKlasse} />
+  }
+  return null
+}
 
 // Demo-Profil für sofortige Nutzung ohne Supabase
 const DEMO_PROFIL: KostenvorlageWerte = {
@@ -407,7 +427,8 @@ function RechnerUebersicht() {
                         </div>
                       ))}
 
-                      <div className="border-t border-border pt-3 flex items-center justify-between">
+                      <Separator className="my-2" />
+                      <div className="flex items-center justify-between">
                         <span className="text-sm font-bold text-text-primary">Gesamtkosten</span>
                         <span className="text-sm font-bold text-text-primary">
                           {formatiereWaehrung(ergebnis.kostenGesamtEur)}

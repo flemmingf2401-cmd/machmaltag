@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { cn } from '@/lib/utils'
+import { cn } from '@/geteilt/helfer/utils'
 
 interface ContainerProps extends React.HTMLAttributes<HTMLDivElement> {
   as?: React.ElementType

@@ -1,11 +1,10 @@
-import { Layout } from '@/components/layout'
-import { Button } from '@/components/ui'
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui'
-import { Container } from '@/components/ui'
+import { Button } from '@/komponenten/ui'
+import { Card, CardHeader, CardTitle, CardDescription } from '@/komponenten/ui'
+import { Container } from '@/komponenten/ui'
 
-function App() {
+function Startseite() {
   return (
-    <Layout>
+    <>
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-primary to-primary-dark py-24 text-white">
         <Container className="text-center">
@@ -82,8 +81,8 @@ function App() {
           </Button>
         </Container>
       </section>
-    </Layout>
+    </>
   )
 }
 
-export default App
+export { Startseite }

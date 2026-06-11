@@ -26,3 +26,6 @@ dist-ssr
 .vercel
 .claude/settings.json
 .claude/settings.local.json
+
+# Extension build output
+dist-extension

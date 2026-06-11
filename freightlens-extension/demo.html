@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FreightLens Demo — TIMOCOM-Simulation</title>
+  <style>
+    /* === Basis-Reset === */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --tc-blue: #003B6F;
+      --tc-blue-light: #0055A4;
+      --tc-orange: #FF6600;
+      --tc-gray-100: #F5F5F5;
+      --tc-gray-200: #E0E0E0;
+      --tc-gray-600: #666666;
+      --tc-gray-800: #333333;
+      --tc-white: #FFFFFF;
+      --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    body {
+      font-family: var(--font);
+      background: var(--tc-gray-100);
+      color: var(--tc-gray-800);
+      line-height: 1.5;
+    }
+
+    /* === Header === */
+    .tc-header {
+      background: var(--tc-blue);
+      color: var(--tc-white);
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-size: 14px;
+    }
+    .tc-header__logo {
+      font-weight: 700;
+      font-size: 18px;
+      letter-spacing: -0.5px;
+    }
+    .tc-header__nav {
+      display: flex;
+      gap: 20px;
+      margin-left: auto;
+    }
+    .tc-header__nav a {
+      color: rgba(255,255,255,0.8);
+      text-decoration: none;
+      font-size: 13px;
+    }
+    .tc-header__nav a:hover { color: var(--tc-white); }
+
+    /* === Suchleiste === */
+    .tc-suche {
+      background: var(--tc-white);
+      border-bottom: 1px solid var(--tc-gray-200);
+      padding: 16px 24px;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+    .tc-suche__input {
+      border: 1px solid var(--tc-gray-200);
+      border-radius: 4px;
+      padding: 8px 12px;
+      font-size: 14px;
+      width: 160px;
+    }
+    .tc-suche__btn {
+      background: var(--tc-orange);
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 8px 16px;
+      font-size: 14px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    .tc-suche__btn:hover { background: #e55c00; }
+
+    /* === Angebotsliste === */
+    .tc-angebote {
+      max-width: 960px;
+      margin: 16px auto;
+      padding: 0 16px;
+    }
+    .tc-angebote__titel {
+      font-size: 14px;
+      color: var(--tc-gray-600);
+      margin-bottom: 12px;
+      padding-left: 4px;
+    }
+
+    /* === Angebotskarte (simuliert TIMOCOM) === */
+    .tc-angebot {
+      background: var(--tc-white);
+      border: 1px solid var(--tc-gray-200);
+      border-radius: 6px;
+      padding: 16px 20px;
+      margin-bottom: 10px;
+      display: grid;
+      grid-template-columns: 1fr 1fr auto auto;
+      gap: 12px 24px;
+      align-items: center;
+      position: relative;
+      transition: box-shadow 0.15s;
+      cursor: pointer;
+    }
+    .tc-angebot:hover {
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    /* Route: Ladeort → Entladeort */
+    .tc-angebot__route {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .tc-angebot__ort {
+      font-size: 15px;
+      font-weight: 600;
+    }
+    .tc-angebot__plz {
+      font-size: 12px;
+      color: var(--tc-gray-600);
+    }
+    .tc-angebot__pfeil {
+      color: var(--tc-orange);
+      font-size: 12px;
+      margin-top: -2px;
+    }
+
+    /* Details: Distanz, Gewicht, Ladung */
+    .tc-angebot__details {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-size: 13px;
+      color: var(--tc-gray-600);
+    }
+    .tc-angebot__detail-row {
+      display: flex;
+      gap: 8px;
+    }
+    .tc-angebot__detail-label {
+      font-weight: 600;
+      color: var(--tc-gray-800);
+      min-width: 70px;
+    }
+
+    /* Preis */
+    .tc-angebot__preis {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--tc-blue);
+      text-align: right;
+      white-space: nowrap;
+    }
+    .tc-angebot__preis-einheit {
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--tc-gray-600);
+    }
+
+    /* Aktion */
+    .tc-angebot__aktion {
+      text-align: center;
+    }
+    .tc-angebot__btn {
+      background: var(--tc-blue);
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 8px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    .tc-angebot__btn:hover { background: var(--tc-blue-light); }
+
+    /* === Demo-Banner === */
+    .demo-banner {
+      background: linear-gradient(135deg, #003057 0%, #00A89D 100%);
+      color: white;
+      text-align: center;
+      padding: 10px 24px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    /* === Responsive === */
+    @media (max-width: 768px) {
+      .tc-angebot {
+        grid-template-columns: 1fr 1fr;
+      }
+      .tc-angebot__preis { text-align: left; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Demo-Flag: Content Script erkennt daran, dass es sich im Demo-Modus befindet -->
+  <div id="freightlens-demo-flag" style="display:none;"></div>
+
+  <div class="demo-banner">
+    🚛 FreightLens Demo-Modus — Simulierte TIMOCOM-Angebotsansicht
+  </div>
+
+  <header class="tc-header">
+    <div class="tc-header__logo">TimoCom</div>
+    <nav class="tc-header__nav">
+      <a href="#">Frachtbörse</a>
+      <a href="#">Fahrzeugbörse</a>
+      <a href="#">Meine Angebote</a>
+    </nav>
+  </header>
+
+  <div class="tc-suche">
+    <input class="tc-suche__input" placeholder="Ladeort PLZ" value="20457">
+    <input class="tc-suche__input" placeholder="Entladeort PLZ" value="80331">
+    <button class="tc-suche__btn">Suchen</button>
+  </div>
+
+  <div class="tc-angebote">
+    <div class="tc-angebote__titel">6 Frachtangebote gefunden</div>
+
+    <!-- Angebot 1: Profitabel -->
+    <div class="tc-angebot"
+         data-fl-ladeort="Hamburg"
+         data-fl-ladeort-plz="20457"
+         data-fl-entladeort="München"
+         data-fl-entladeort-plz="80331"
+         data-fl-distanz="790"
+         data-fl-preis="1450"
+         data-fl-gewicht="24000"
+         data-fl-ladung="FTL Paletten">
+      <div class="tc-angebot__route">
+        <div>
+          <div class="tc-angebot__ort">Hamburg</div>
+          <div class="tc-angebot__plz">20457</div>
+        </div>
+        <div class="tc-angebot__pfeil">↓</div>
+        <div>
+          <div class="tc-angebot__ort">München</div>
+          <div class="tc-angebot__plz">80331</div>
+        </div>
+      </div>
+      <div class="tc-angebot__details">
+        <div class="tc-angebot__detail-row">
+          <span class="tc-angebot__detail-label">Distanz:</span>
+          <span>790 km</span>
+        </div>
+        <div class="tc-angebot__detail-row">
+          <span class="tc-angebot__detail-label">Gewicht:</span>
+          <span>24.000 kg</span>
+        </div>
+        <div class="tc-angebot__detail-row">
+          <span class="tc-angebot__detail-label">Ladung:</span>
+          <span>FTL Paletten</span>
+        </div>
+      </div>
+      <div class="tc-angebot__preis">
+        1.450,00 €
+        <div class="tc-angebot__preis-einheit">Festpreis</div>
+      </div>
+      <div class="tc-angebot__aktion">
+        <button class="tc-angebot__btn">Anfragen</button>
+      </div>
+    </div>
+
+    <!-- Angebot 2: Grenzwertig -->
+    <div class="tc-angebot"
+         data-fl-ladeort="Berlin"
+         data-fl-ladeort-plz="10115"
+         data-fl-entladeort="Frankfurt"
+         data-fl-entladeort-plz="60329"
+         data-fl-distanz="545"
+         data-fl-preis="850"
+         data-fl-gewicht="18000"
+         data-fl-ladung="LTL Stückgut">
+      <div class="tc-angebot__route">
+        <div>
+          <div class="tc-angebot__ort">Berlin</div>
+          <div class="tc-angebot__plz">10115</div>
+        </div>
+        <div class="tc-angebot__pfeil">↓</div>
+        <div>
+          <div class="tc-angebot__ort">Frankfurt</div>
+          <div class="tc-angebot__plz">60329</div>
+        </div>
+      </div>
+      <div class="tc-angebot__details">
+        <div class="tc-angebot__detail-row">
+          <span class="tc-angebot__detail-label">Distanz:</span>
+          <span>545 km</span>
+        </div>
+        <div class="tc-angebot__detail-row">
+          <span class="tc-angebot__detail-label">Gewicht:</span>
+          <span>18.000 kg</span>
+        </div>
+        <div class="tc-angebot__detail-row">
+          <span class="tc-angebot__detail-label">Ladung:</span>
+          <span>LTL Stückgut</span>
+        </div>
+      </div>
+      <div class="tc-angebot__preis">
+        850,00 €
+        <div class="tc-angebot__preis-einheit">Festpreis</div>
+      </div>
+      <div class="tc-angebot__aktion">
+        <button class="tc-angebot__btn">Anfragen</button>
+      </div>
+    </div>
+
+    <!-- Angebot 3: Verlust -->
+    <div class="tc-angebot"
+         data-fl-ladeort="Köln"
+         data-fl-ladeort-plz="50667"
+         data-fl-entladeort="Wien"
+         data-fl-entladeort-plz="1010"
+         data-fl-distanz="920"
+         data-fl-preis="1100"
+         data-fl-gewicht="22000"
+         data-fl-ladung="FTL Paletten">
+      <div class="tc-angebot__route">
+        <div>
+          <div class="tc-angebot__ort">Köln</div>
+          <div class="tc-angebot__plz">50667</div>
+        </div>
+        <div class="tc-angebot__pfeil">↓</div>
+        <div>
+          <div class="tc-angebot__ort">Wien</div>
+          <div class="tc-angebot__plz">1010</div>
+        </div>
+      </div>
+      <div class="tc-angebot__details">
+        <div class="tc-angebot__detail-row">
+          <span class="tc-angebot__detail-label">Distanz:</span>
+          <span>920 km</span>
+        </div>
+        <div class="tc-angebot__detail-row">
+          <span class="tc-angebot__detail-label">Gewicht:</span>
+          <span>22.000 kg</span>
+        </div>
+        <div class="tc-angebot__detail-row">
+          <span class="tc-angebot__detail-label">Ladung:</span>
+          <span>FTL Paletten</span>
+        </div>
+      </div>
+      <div class="tc-angebot__preis">
+        1.100,00 €
+        <div class="tc-angebot__preis-einheit">Festpreis</div>
+      </div>
+      <div class="tc-angebot__aktion">
+        <button class="tc-angebot__btn">Anfragen</button>
+      </div>
+    </div>
+
+    <!-- Angebot 4: Sehr profitabel -->
+    <div class="tc-angebot"
+         data-fl-ladeort="Düsseldorf"
+         data-fl-ladeort-plz="40210"
+         data-fl-entladeort="Stuttgart"
+         data-fl-entladeort-plz="70173"
+         data-fl-distanz="400"
+         data-fl-preis="980"
+         data-fl-gewicht="20000"
+         data-fl-ladung="FTL Paletten">
+      <div class="tc-angebot__route">
+        <div>
+          <div class="tc-angebot__ort">Düsseldorf</div>
+          <div class="tc-angebot__plz">40210</div>
+        </div>
+        <div class="tc-angebot__pfeil">↓</div>
+        <div>
+          <div class="tc-angebot__ort">Stuttgart</div>
+          <div class="tc-angebot__plz">70173</div>
+        </div>
+      </div>
+      <div class="tc-angebot__details">
+        <div class="tc-angebot__detail-row">
+          <span class="tc-angebot__detail-label">Distanz:</span>
+          <span>400 km</span>
+        </div>
+        <div class="tc-angebot__detail-row">
+          <span class="tc-angebot__detail-label">Gewicht:</span>
+          <span>20.000 kg</span>
+        </div>
+        <div class="tc-angebot__detail-row">
+          <span class="tc-angebot__detail-label">Ladung:</span>
+          <span>FTL Paletten</span>
+        </div>
+      </div>
+      <div class="tc-angebot__preis">
+        980,00 €
+        <div class="tc-angebot__preis-einheit">Festpreis</div>
+      </div>
+      <div class="tc-angebot__aktion">
+        <button class="tc-angebot__btn">Anfragen</button>
+      </div>
+    </div>
+
+    <!-- Angebot 5: Internationale Route -->
+    <div class="tc-angebot"
+         data-fl-ladeort="München"
+         data-fl-ladeort-plz="80331"
+         data-fl-entladeort="Mailand"
+         data-fl-entladeort-plz="20121"
+         data-fl-distanz="600"
+         data-fl-preis="1200"
+         data-fl-gewicht="25000"
+         data-fl-ladung="FTL Paletten">
+      <div class="tc-angebot__route">
+        <div>
+          <div class="tc-angebot__ort">München</div>
+          <div class="tc-angebot__plz">80331</div>
+        </div>
+        <div class="tc-angebot__pfeil">↓</div>
+        <div>
+          <div class="tc-angebot__ort">Mailand</div>
+          <div class="tc-angebot__plz">20121</div>
+        </div>
+      </div>
+      <div class="tc-angebot__details">
+        <div class="tc-angebot__detail-row">
+          <span class="tc-angebot__detail-label">Distanz:</span>
+          <span>600 km</span>
+        </div>
+        <div class="tc-angebot__detail-row">
+          <span class="tc-angebot__detail-label">Gewicht:</span>
+          <span>25.000 kg</span>
+        </div>
+        <div class="tc-angebot__detail-row">
+          <span class="tc-angebot__detail-label">Ladung:</span>
+          <span>FTL Paletten</span>
+        </div>
+      </div>
+      <div class="tc-angebot__preis">
+        1.200,00 €
+        <div class="tc-angebot__preis-einheit">Festpreis</div>
+      </div>
+      <div class="tc-angebot__aktion">
+        <button class="tc-angebot__btn">Anfragen</button>
+      </div>
+    </div>
+
+    <!-- Angebot 6: Kurzstrecke, knapp -->
+    <div class="tc-angebot"
+         data-fl-ladeort="Hannover"
+         data-fl-ladeort-plz="30159"
+         data-fl-entladeort="Bremen"
+         data-fl-entladeort-plz="28195"
+         data-fl-distanz="130"
+         data-fl-preis="280"
+         data-fl-gewicht="12000"
+         data-fl-ladung="LTL Stückgut">
+      <div class="tc-angebot__route">
+        <div>
+          <div class="tc-angebot__ort">Hannover</div>
+          <div class="tc-angebot__plz">30159</div>
+        </div>
+        <div class="tc-angebot__pfeil">↓</div>
+        <div>
+          <div class="tc-angebot__ort">Bremen</div>
+          <div class="tc-angebot__plz">28195</div>
+        </div>
+      </div>
+      <div class="tc-angebot__details">
+        <div class="tc-angebot__detail-row">
+          <span class="tc-angebot__detail-label">Distanz:</span>
+          <span>130 km</span>
+        </div>
+        <div class="tc-angebot__detail-row">
+          <span class="tc-angebot__detail-label">Gewicht:</span>
+          <span>12.000 kg</span>
+        </div>
+        <div class="tc-angebot__detail-row">
+          <span class="tc-angebot__detail-label">Ladung:</span>
+          <span>LTL Stückgut</span>
+        </div>
+      </div>
+      <div class="tc-angebot__preis">
+        280,00 €
+        <div class="tc-angebot__preis-einheit">Festpreis</div>
+      </div>
+      <div class="tc-angebot__aktion">
+        <button class="tc-angebot__btn">Anfragen</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

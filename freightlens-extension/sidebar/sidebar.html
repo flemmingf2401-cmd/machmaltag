@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FreightLens — Seitenpanel</title>
+  <link rel="stylesheet" href="sidebar.css">
+</head>
+<body>
+  <div class="fl-sidebar">
+    <!-- Header -->
+    <header class="fl-sidebar__header">
+      <div class="fl-sidebar__logo">
+        <span class="fl-sidebar__logo-icon">🔍</span>
+        <span class="fl-sidebar__logo-text">FreightLens</span>
+      </div>
+      <nav class="fl-sidebar__tabs">
+        <button class="fl-tab fl-tab--aktiv" data-tab="bewertung">Bewertung</button>
+        <button class="fl-tab" data-tab="einstellungen">Einstellungen</button>
+        <button class="fl-tab" data-tab="vergleich">Vergleich</button>
+      </nav>
+    </header>
+
+    <!-- Tab: Bewertung -->
+    <section id="tab-bewertung" class="fl-tab-panel fl-tab-panel--aktiv">
+      <!-- Platzhalter wenn kein Angebot ausgewählt -->
+      <div id="bewertung-leer" class="fl-leer">
+        <div class="fl-leer__icon">📦</div>
+        <p>Klicke auf ein Badge in TIMOCOM, um die Kostenaufschlüsselung zu sehen.</p>
+      </div>
+
+      <!-- Bewertungsinhalt (wird per JS befüllt) -->
+      <div id="bewertung-inhalt" class="fl-bewertung" style="display:none;">
+        <!-- Angebotsinfo -->
+        <div class="fl-angebot-info">
+          <div class="fl-angebot-route" id="angebot-route"></div>
+          <div class="fl-angebot-preis" id="angebot-preis"></div>
+        </div>
+
+        <!-- Bewertung Badge -->
+        <div class="fl-bewertungs-badge" id="bewertungs-badge"></div>
+
+        <!-- Kostentreiber -->
+        <div class="fl-kostentreiber" id="kostentreiber-liste"></div>
+
+        <!-- Gesamtergebnis -->
+        <div class="fl-ergebnis" id="ergebnis-zusammenfassung"></div>
+      </div>
+    </section>
+
+    <!-- Tab: Einstellungen -->
+    <section id="tab-einstellungen" class="fl-tab-panel">
+      <div class="fl-einstellungen">
+        <p class="fl-einstellungen__hinweis">
+          🔒 Deine Kostendaten verbleiben lokal auf diesem Gerät.
+        </p>
+
+        <form id="einstellungen-form" class="fl-form">
+          <!-- Diesel/Kraftstoff -->
+          <fieldset class="fl-fieldset">
+            <legend class="fl-fieldset__legend">Diesel/Kraftstoff</legend>
+            <div class="fl-form-row">
+              <label class="fl-label" for="einst-verbrauch">Verbrauch (l/100km)</label>
+              <input class="fl-input" id="einst-verbrauch" type="number" step="0.1" min="0" data-feld="verbrauchLPro100Km">
+            </div>
+            <div class="fl-form-row">
+              <label class="fl-label" for="einst-dieselpreis">Dieselpreis (€/l)</label>
+              <input class="fl-input" id="einst-dieselpreis" type="number" step="0.01" min="0" data-feld="dieselPreisEurL">
+            </div>
+            <div class="fl-form-row">
+              <label class="fl-label" for="einst-leeraufschlag">Leerkilometer-Aufschlag</label>
+              <input class="fl-input" id="einst-leeraufschlag" type="number" step="0.01" min="0" max="1" data-feld="leerkilometerAufschlag">
+            </div>
+          </fieldset>
+
+          <!-- Fahrerpersonal -->
+          <fieldset class="fl-fieldset">
+            <legend class="fl-fieldset__legend">Fahrerpersonal</legend>
+            <div class="fl-form-row">
+              <label class="fl-label" for="einst-stundenlohn">Stundenlohn (€/h)</label>
+              <input class="fl-input" id="einst-stundenlohn" type="number" step="0.5" min="0" data-feld="stundenlohnEur">
+            </div>
+            <div class="fl-form-row">
+              <label class="fl-label" for="einst-korrekturfaktor">Lenkzeit-Korrekturfaktor</label>
+              <input class="fl-input" id="einst-korrekturfaktor" type="number" step="0.1" min="1" max="2" data-feld="lenkzeitKorrekturfaktor">
+            </div>
+            <div class="fl-form-row">
+              <label class="fl-label" for="einst-spesen">Spesen/Tag (€)</label>
+              <input class="fl-input" id="einst-spesen" type="number" step="1" min="0" data-feld="spesenProTagEur">
+            </div>
+            <div class="fl-form-row">
+              <label class="fl-label" for="einst-uebernachtung">Übernachtung (€)</label>
+              <input class="fl-input" id="einst-uebernachtung" type="number" step="1" min="0" data-feld="uebernachtungEur">
+            </div>
+          </fieldset>
+
+          <!-- Maut -->
+          <fieldset class="fl-fieldset">
+            <legend class="fl-fieldset__legend">Maut/Toll</legend>
+            <div class="fl-form-row">
+              <label class="fl-label" for="einst-maut-de">Maut DE (€/km)</label>
+              <input class="fl-input" id="einst-maut-de" type="number" step="0.001" min="0" data-feld="mautDeutschlandEurProKm">
+            </div>
+            <div class="fl-form-row">
+              <label class="fl-label" for="einst-eurovignette">Eurovignette/Trip (€)</label>
+              <input class="fl-input" id="einst-eurovignette" type="number" step="1" min="0" data-feld="eurovignetteBetragEur">
+            </div>
+            <div class="fl-form-row">
+              <label class="fl-label" for="einst-maut-ausland">Ausland pauschal (€/km)</label>
+              <input class="fl-input" id="einst-maut-ausland" type="number" step="0.01" min="0" data-feld="mautAuslandPauschalEurProKm">
+            </div>
+          </fieldset>
+
+          <!-- Fixkosten -->
+          <fieldset class="fl-fieldset">
+            <legend class="fl-fieldset__legend">Fixkosten (monatlich)</legend>
+            <div class="fl-form-row">
+              <label class="fl-label" for="einst-kfz-steuer">Kfz-Steuer (€/Monat)</label>
+              <input class="fl-input" id="einst-kfz-steuer" type="number" step="10" min="0" data-feld="kfzSteuerMonatlichEur">
+            </div>
+            <div class="fl-form-row">
+              <label class="fl-label" for="einst-hu-au">HU/AU (€/Monat)</label>
+              <input class="fl-input" id="einst-hu-au" type="number" step="5" min="0" data-feld="huAuMonatlichEur">
+            </div>
+            <div class="fl-form-row">
+              <label class="fl-label" for="einst-versicherung">Versicherung (€/Monat)</label>
+              <input class="fl-input" id="einst-versicherung" type="number" step="50" min="0" data-feld="versicherungMonatlichEur">
+            </div>
+            <div class="fl-form-row">
+              <label class="fl-label" for="einst-leasing">Leasing/Abschreibung (€/Monat)</label>
+              <input class="fl-input" id="einst-leasing" type="number" step="100" min="0" data-feld="leasingAbschreibungMonatlichEur">
+            </div>
+            <div class="fl-form-row">
+              <label class="fl-label" for="einst-wartung">Wartung (€/Monat)</label>
+              <input class="fl-input" id="einst-wartung" type="number" step="50" min="0" data-feld="wartungMonatlichEur">
+            </div>
+          </fieldset>
+
+          <div class="fl-form-aktionen">
+            <button type="submit" class="fl-btn fl-btn--primary">Speichern</button>
+            <button type="button" id="btn-zuruecksetzen" class="fl-btn fl-btn--secondary">Auf Standard zurücksetzen</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- Tab: Vergleich (Mock) -->
+    <section id="tab-vergleich" class="fl-tab-panel">
+      <div class="fl-vergleich">
+        <div class="fl-vergleich__hinweis">
+          ℹ️ Geschätzter Marktwert basierend auf Modellrechnung.
+          <span class="fl-badge--simuliert">simuliert</span>
+        </div>
+        <div id="vergleich-inhalt" class="fl-vergleich__daten">
+          <p class="fl-leer">Wähle ein Angebot aus, um den Marktwert-Vergleich zu sehen.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script src="../shared/formatierung.js"></script>
+  <script src="../shared/nachrichten.js"></script>
+  <script src="sidebar.js"></script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FreightLens</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="fl-popup">
+    <!-- Header -->
+    <header class="fl-popup__header">
+      <div class="fl-popup__logo">
+        <span class="fl-popup__logo-icon">🔍</span>
+        <span class="fl-popup__logo-text">FreightLens</span>
+      </div>
+      <span class="fl-popup__version">v1.0</span>
+    </header>
+
+    <!-- Status -->
+    <section class="fl-popup__status">
+      <div class="fl-popup__status-zeile">
+        <span class="fl-popup__status-label">FreightLens</span>
+        <label class="fl-switch">
+          <input type="checkbox" id="toggle-aktiv" checked>
+          <span class="fl-switch__slider"></span>
+        </label>
+      </div>
+      <div class="fl-popup__status-zeile">
+        <span class="fl-popup__status-label">Demo-Modus</span>
+        <label class="fl-switch">
+          <input type="checkbox" id="toggle-demo" checked>
+          <span class="fl-switch__slider"></span>
+        </label>
+      </div>
+    </section>
+
+    <!-- Tagesstatistik -->
+    <section class="fl-popup__stats">
+      <h3 class="fl-popup__stats-titel">Heute</h3>
+      <div class="fl-popup__stats-grid">
+        <div class="fl-popup__stat">
+          <span class="fl-popup__stat-wert" id="stat-anzahl">0</span>
+          <span class="fl-popup__stat-label">Bewertet</span>
+        </div>
+        <div class="fl-popup__stat">
+          <span class="fl-popup__stat-wert" id="stat-profitabel" style="color: var(--fl-green);">0</span>
+          <span class="fl-popup__stat-label">Profitabel</span>
+        </div>
+        <div class="fl-popup__stat">
+          <span class="fl-popup__stat-wert" id="stat-marge">0 %</span>
+          <span class="fl-popup__stat-label">Ø Marge</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Aktionen -->
+    <section class="fl-popup__aktionen">
+      <button id="btn-seitenpanel" class="fl-popup__btn fl-popup__btn--primary">
+        📊 Side Panel öffnen
+      </button>
+    </section>
+
+    <!-- Fußzeile -->
+    <footer class="fl-popup__fuss">
+      <span>Deine Daten verbleiben lokal.</span>
+    </footer>
+  </div>
+
+  <script src="../shared/nachrichten.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

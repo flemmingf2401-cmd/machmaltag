@@ -12,7 +12,7 @@ import { Badge } from '@/komponenten/ui'
 import { Container } from '@/komponenten/ui'
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@/komponenten/ui/select'
 import { useToast } from '@/komponenten/ui/toast'
-import { Copy } from 'lucide-react'
+import { Copy, AlertCircle, CheckCircle2, Loader2, Fuel, User, Route, Wrench } from 'lucide-react'
 
 // Demo-Profil für sofortige Nutzung ohne Supabase
 const DEMO_PROFIL: KostenvorlageWerte = {
@@ -152,10 +152,10 @@ function RechnerUebersicht() {
   }, [ergebnis, ladeort, entladeort, distanzKm, preisEur, fahrzeugtyp, toastHinzufuegen])
 
   return (
-    <section className="py-12 bg-bg-subtle min-h-[80vh]">
+    <section className="py-12 lg:py-16 bg-bg-subtle min-h-[80vh]">
       <Container>
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-text-primary">
+          <h1 className="text-3xl font-bold tracking-tight text-text-primary">
             Rentabilitäts-Rechner
           </h1>
           <p className="text-text-secondary mt-2">
@@ -165,7 +165,7 @@ function RechnerUebersicht() {
 
         <div className="grid gap-8 lg:grid-cols-2">
           {/* Linke Spalte: Eingabe */}
-          <div className="space-y-6">
+          <div className="space-y-8">
             <Card>
               <CardHeader>
                 <CardTitle>Angebotsdaten</CardTitle>
@@ -198,19 +198,21 @@ function RechnerUebersicht() {
                 {/* Routing-Status */}
                 {routeLaeft && (
                   <div className="flex items-center gap-2 text-sm text-primary">
-                    <span className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-primary border-t-transparent" />
+                    <Loader2 className="h-4 w-4 animate-spin" />
                     Route wird berechnet…
                   </div>
                 )}
                 {routeFehler && (
-                  <div className="rounded-md bg-warning-light p-3 text-sm text-accent-dark">
-                    ⚠️ {routeFehler} — Gib die Distanz manuell ein.
+                  <div className="flex items-center gap-2 rounded-md bg-warning-light p-3 text-sm text-accent-dark">
+                    <AlertCircle className="h-4 w-4 shrink-0" />
+                    <span>{routeFehler} — Gib die Distanz manuell ein.</span>
                   </div>
                 )}
                 {route && !routeLaeft && (
-                  <div className="rounded-md bg-success-light p-3 text-sm text-success">
-                    ✅ Route berechnet: {route.distanzKm} km, ~{route.fahrzeitStunden.toFixed(1)} h Fahrzeit
-                    {route.laender.length > 1 && (` über ${route.laender.join(', ')}`)}
+                  <div className="flex items-center gap-2 rounded-md bg-success-light p-3 text-sm text-success">
+                    <CheckCircle2 className="h-4 w-4 shrink-0" />
+                    <span>Route berechnet: {route.distanzKm} km, ~{route.fahrzeitStunden.toFixed(1)} h Fahrzeit
+                    {route.laender.length > 1 && (` über ${route.laender.join(', ')}`)}</span>
                   </div>
                 )}
 
@@ -333,7 +335,7 @@ function RechnerUebersicht() {
             {ergebnis ? (
               <>
                 {/* Haupt-Ergebnis */}
-                <Card className="border-2 border-primary/20">
+                <Card className="border-l-4 border-l-accent">
                   <CardContent className="pt-6">
                     <div className="text-center space-y-4">
                       <Badge variant={bewertungFarbe as 'success' | 'warning' | 'error'}>
@@ -341,7 +343,7 @@ function RechnerUebersicht() {
                       </Badge>
 
                       <div>
-                        <p className="text-4xl font-bold text-text-primary">
+                        <p className="text-5xl font-bold text-text-primary">
                           {ergebnis.margeEur >= 0 ? '+' : ''}{formatiereWaehrung(ergebnis.margeEur)}
                         </p>
                         <p className="text-lg text-text-secondary">
@@ -386,7 +388,8 @@ function RechnerUebersicht() {
                       {Object.values(ergebnis.kostentreiber).map((treiber) => (
                         <div key={treiber.bezeichnung} className="space-y-2">
                           <div className="flex items-center justify-between">
-                            <span className="text-sm font-medium text-text-primary">
+                            <span className="flex items-center gap-2 text-sm font-medium text-text-primary">
+                              <KostentreiberIcon bezeichnung={treiber.bezeichnung} />
                               {treiber.bezeichnung}
                             </span>
                             <span className="text-sm font-semibold text-text-primary">

@@ -36,6 +36,16 @@ export {
   DialogDescription,
 } from './dialog'
 export { TooltipProvider, Tooltip, TooltipTrigger, TooltipContent } from './tooltip'
+export { Switch } from './switch'
+export { Checkbox } from './checkbox'
+export {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuLabel,
+} from './dropdown-menu'
 export { NumerischeEingabe, type NumerischeEingabeProps, type Einheit } from './numerische-eingabe'
 export {
   ToastProvider,

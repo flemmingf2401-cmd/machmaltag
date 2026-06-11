@@ -1,0 +1,399 @@
+/**
+ * FreightLens Sidebar Styles.
+ *
+ * Brand-Farben: Dunkelblau #003057, Teal #00A89D, Weiß.
+ * Unabhängig von TIMOCOM-Styles — alle Klassen mit fl- Prefix.
+ */
+
+:root {
+  --fl-blue: #003057;
+  --fl-teal: #00A89D;
+  --fl-teal-light: #E0F5F3;
+  --fl-white: #FFFFFF;
+  --fl-gray-50: #F9FAFB;
+  --fl-gray-100: #F3F4F6;
+  --fl-gray-200: #E5E7EB;
+  --fl-gray-500: #6B7280;
+  --fl-gray-700: #374151;
+  --fl-gray-900: #111827;
+  --fl-green: #059669;
+  --fl-green-bg: #D1FAE5;
+  --fl-amber: #D97706;
+  --fl-amber-bg: #FEF3C7;
+  --fl-red: #DC2626;
+  --fl-red-bg: #FEE2E2;
+  --fl-radius: 6px;
+  --fl-radius-lg: 8px;
+  --fl-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  --fl-font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--fl-font);
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--fl-gray-900);
+  background: var(--fl-gray-50);
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* === Header === */
+.fl-sidebar__header {
+  background: var(--fl-blue);
+  color: var(--fl-white);
+  padding: 12px 16px 0;
+}
+
+.fl-sidebar__logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.fl-sidebar__logo-icon { font-size: 18px; }
+
+.fl-sidebar__tabs {
+  display: flex;
+  gap: 0;
+}
+
+.fl-tab {
+  background: transparent;
+  color: rgba(255,255,255,0.6);
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.fl-tab:hover {
+  color: rgba(255,255,255,0.9);
+}
+
+.fl-tab--aktiv {
+  color: var(--fl-white);
+  border-bottom-color: var(--fl-teal);
+}
+
+/* === Tab Panels === */
+.fl-tab-panel {
+  display: none;
+  padding: 16px;
+}
+
+.fl-tab-panel--aktiv {
+  display: block;
+}
+
+/* === Leerer Zustand === */
+.fl-leer {
+  text-align: center;
+  color: var(--fl-gray-500);
+  padding: 32px 16px;
+}
+
+.fl-leer__icon {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+/* === Angebotsinfo === */
+.fl-angebot-info {
+  background: var(--fl-white);
+  border: 1px solid var(--fl-gray-200);
+  border-radius: var(--fl-radius-lg);
+  padding: 12px 16px;
+  margin-bottom: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.fl-angebot-route {
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--fl-blue);
+}
+
+.fl-angebot-preis {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--fl-teal);
+}
+
+/* === Bewertungs-Badge === */
+.fl-bewertungs-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: var(--fl-radius);
+  font-weight: 700;
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+
+.fl-bewertungs-badge--profitabel {
+  background: var(--fl-green-bg);
+  color: var(--fl-green);
+}
+
+.fl-bewertungs-badge--grenzwertig {
+  background: var(--fl-amber-bg);
+  color: var(--fl-amber);
+}
+
+.fl-bewertungs-badge--verlust {
+  background: var(--fl-red-bg);
+  color: var(--fl-red);
+}
+
+/* === Kostentreiber === */
+.fl-kostentreiber {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.fl-kostentreiber__karte {
+  background: var(--fl-white);
+  border: 1px solid var(--fl-gray-200);
+  border-radius: var(--fl-radius);
+  padding: 10px 12px;
+}
+
+.fl-kostentreiber__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.fl-kostentreiber__name {
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--fl-gray-700);
+}
+
+.fl-kostentreiber__betrag {
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--fl-gray-900);
+}
+
+.fl-kostentreiber__position {
+  display: flex;
+  justify-content: space-between;
+  padding: 2px 0;
+  font-size: 11px;
+  color: var(--fl-gray-500);
+}
+
+.fl-kostentreiber__detail {
+  font-style: italic;
+  font-size: 10px;
+}
+
+/* === Ergebnis-Zusammenfassung === */
+.fl-ergebnis {
+  background: var(--fl-blue);
+  color: var(--fl-white);
+  border-radius: var(--fl-radius-lg);
+  padding: 12px 16px;
+}
+
+.fl-ergebnis__zeile {
+  display: flex;
+  justify-content: space-between;
+  padding: 3px 0;
+  font-size: 12px;
+}
+
+.fl-ergebnis__zeile--fett {
+  font-weight: 700;
+  font-size: 14px;
+  padding-top: 6px;
+  margin-top: 6px;
+  border-top: 1px solid rgba(255,255,255,0.2);
+}
+
+.fl-ergebnis__label { opacity: 0.8; }
+.fl-ergebnis__wert { font-weight: 600; }
+
+/* === Einstellungen === */
+.fl-einstellungen__hinweis {
+  background: var(--fl-teal-light);
+  color: var(--fl-teal);
+  border-radius: var(--fl-radius);
+  padding: 8px 12px;
+  margin-bottom: 16px;
+  font-size: 12px;
+}
+
+.fl-fieldset {
+  border: 1px solid var(--fl-gray-200);
+  border-radius: var(--fl-radius);
+  padding: 12px;
+  margin-bottom: 12px;
+}
+
+.fl-fieldset__legend {
+  font-weight: 700;
+  font-size: 12px;
+  color: var(--fl-blue);
+  padding: 0 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.fl-form-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 0;
+}
+
+.fl-label {
+  font-size: 12px;
+  color: var(--fl-gray-700);
+  min-width: 140px;
+}
+
+.fl-input {
+  border: 1px solid var(--fl-gray-200);
+  border-radius: 4px;
+  padding: 6px 8px;
+  font-size: 13px;
+  width: 120px;
+  text-align: right;
+  font-family: var(--fl-font);
+}
+
+.fl-input:focus {
+  outline: none;
+  border-color: var(--fl-teal);
+  box-shadow: 0 0 0 2px rgba(0, 168, 157, 0.2);
+}
+
+.fl-form-aktionen {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.fl-btn {
+  border: none;
+  border-radius: var(--fl-radius);
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.fl-btn--primary {
+  background: var(--fl-teal);
+  color: var(--fl-white);
+}
+
+.fl-btn--primary:hover {
+  background: #009690;
+}
+
+.fl-btn--secondary {
+  background: var(--fl-gray-100);
+  color: var(--fl-gray-700);
+  border: 1px solid var(--fl-gray-200);
+}
+
+.fl-btn--secondary:hover {
+  background: var(--fl-gray-200);
+}
+
+/* === Vergleich === */
+.fl-vergleich__hinweis {
+  background: var(--fl-gray-100);
+  border: 1px dashed var(--fl-gray-500);
+  border-radius: var(--fl-radius);
+  padding: 8px 12px;
+  font-size: 11px;
+  color: var(--fl-gray-500);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.fl-badge--simuliert {
+  background: var(--fl-gray-200);
+  color: var(--fl-gray-700);
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.fl-vergleich__zeile {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--fl-gray-100);
+  font-size: 13px;
+}
+
+.fl-vergleich__label {
+  color: var(--fl-gray-500);
+}
+
+.fl-vergleich__wert {
+  font-weight: 700;
+}
+
+.fl-vergleich__wert--hoeher {
+  color: var(--fl-green);
+}
+
+.fl-vergleich__wert--niedriger {
+  color: var(--fl-red);
+}
+
+/* === Gespeichert-Toast === */
+.fl-toast {
+  position: fixed;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--fl-green);
+  color: white;
+  padding: 8px 16px;
+  border-radius: var(--fl-radius);
+  font-size: 12px;
+  font-weight: 600;
+  animation: fl-toast-in 0.2s ease, fl-toast-out 0.3s ease 1.7s forwards;
+  z-index: 9999;
+}
+
+@keyframes fl-toast-in {
+  from { opacity: 0; transform: translateX(-50%) translateY(10px); }
+  to { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+@keyframes fl-toast-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}

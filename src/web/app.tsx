@@ -4,7 +4,7 @@ import { ToastProvider, ToastViewport, ToastKontextProvider, Toast as ToastKompo
 import { useToast } from '@/komponenten/ui/toast'
 import { Startseite } from './seiten/startseite'
 import { LoginSeite } from './seiten/login'
-import { RechnerUebersicht } from './seiten/rechner/uebersicht'
+import { RechnerSeite } from './seiten/rechner/rechner-seite'
 import { Tagesstatistik } from './seiten/dashboard/tagesstatistik'
 import { Historie } from './seiten/dashboard/historie'
 
@@ -40,7 +40,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Startseite />} />
           <Route path="/login" element={<LoginSeite />} />
-          <Route path="/rechner" element={<RechnerUebersicht />} />
+          <Route path="/rechner" element={<RechnerSeite />} />
           <Route path="/dashboard" element={<Tagesstatistik />} />
           <Route path="/dashboard/historie" element={<Historie />} />
         </Routes>

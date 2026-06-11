@@ -15,7 +15,6 @@ import { Label } from '@/komponenten/ui'
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/komponenten/ui'
 import { Container } from '@/komponenten/ui'
 import { NumerischeEingabe } from '@/komponenten/ui'
-import { Separator } from '@/komponenten/ui'
 import { TooltipProvider, Tooltip, TooltipTrigger, TooltipContent } from '@/komponenten/ui'
 import {
   Select,

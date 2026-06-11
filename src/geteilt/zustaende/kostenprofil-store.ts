@@ -78,7 +78,7 @@ export const useKostenprofilStore = create<KostenprofilZustand>((set, get) => ({
 
     // Erste Vorlage automatisch aktivieren
     if (data && data.length > 0 && !get().aktiveVorlageId) {
-      get().vorlageWaehlen(data[0].id)
+      get().vorlageWaehlen((data[0] as Record<string, unknown>).id as string)
     }
   },
 
@@ -142,12 +142,12 @@ export const useKostenprofilStore = create<KostenprofilZustand>((set, get) => ({
           kostenvorlage_id: vorlageId,
           feld: anpassung.feld,
           wert: anpassung.wert,
-        })
+        } as never)
       } else {
         // Bestehende aktualisieren
         await supabase
           .from(TABELLEN.PERSOENLICHE_ANPASSUNGEN)
-          .update({ wert: anpassung.wert })
+          .update({ wert: anpassung.wert } as never)
           .eq('id', anpassung.id)
       }
     }

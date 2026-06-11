@@ -30,9 +30,13 @@
   --color-warning: #FFC107;
   --color-warning-light: #FFF3E6;
   --color-error: #DC3545;
+  --color-error-dark: #C82333;
   --color-error-light: #FFEBEE;
   --color-info: #17A2B8;
   --color-info-light: #E8F0F8;
+
+  /* --- Accent Glow (subtiler Orange-Hintergrund) --- */
+  --color-accent-glow: rgba(255, 102, 0, 0.08);
 
   /* --- Typography --- */
   --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;

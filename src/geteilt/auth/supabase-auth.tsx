@@ -134,14 +134,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (data.user) {
       // Hinweis: organisation_id muss vorab existieren.
       // In der MVP-Phase erstellen wir eine Demo-Organisation beim ersten Benutzer.
-      const { error: profilFehler } = await supabase.from('benutzer').insert({
+      const einfügen: Record<string, unknown> = {
         id: data.user.id,
         organisation_id: (await demoOrganisationErhalten()).id,
         vorname,
         nachname,
         email,
         rolle: 'admin',
-      })
+      }
+      const { error: profilFehler } = await supabase.from('benutzer').insert(einfügen as never)
       if (profilFehler) {
         console.error('[Auth] Profil-Erstellung fehlgeschlagen:', profilFehler.message)
       }
@@ -197,7 +198,7 @@ async function demoOrganisationErhalten(): Promise<{ id: string }> {
   // Demo-Organisation erstellen
   const { data: neueOrg, error } = await supabase
     .from('organisationen')
-    .insert({ name: 'Demo Organisation', slug: 'demo' })
+    .insert({ name: 'Demo Organisation', slug: 'demo' } as never)
     .select('id')
     .single()
 

@@ -235,7 +235,7 @@ export const useHistorieStore = create<HistorieZustand>((set, get) => ({
         benutzer_id: benutzerId,
         organisation_id: organisationId,
         kostenvorlage_id: kostenvorlageId,
-      })
+      } as never)
 
     if (error) {
       set({ fehler: error.message })
@@ -251,7 +251,7 @@ export const useHistorieStore = create<HistorieZustand>((set, get) => ({
 
     const { error } = await supabase
       .from(TABELLEN.BEWERTETE_ANGEBOTE)
-      .update(updateDaten)
+      .update(updateDaten as never)
       .eq('id', angebotId)
 
     if (error) {

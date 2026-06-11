@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MachMalTag</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      width: 320px;
+      min-height: 200px;
+      background: #ffffff;
+      color: #333;
+    }
+    .header {
+      background: #003B6F;
+      color: white;
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .header .logo {
+      width: 32px;
+      height: 32px;
+      background: #FF6600;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 14px;
+    }
+    .header h1 { font-size: 15px; font-weight: 600; }
+    .content { padding: 16px; }
+    .status {
+      background: #E8F0F8;
+      border-radius: 6px;
+      padding: 12px;
+      margin-bottom: 12px;
+      font-size: 13px;
+    }
+    .status.angemeldet { background: #E8F5E9; }
+    .status.abgemeldet { background: #FFF3E6; color: #E65C00; }
+    .stat-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .stat-card {
+      background: #F5F5F5;
+      border-radius: 6px;
+      padding: 10px;
+      text-align: center;
+    }
+    .stat-card .wert { font-size: 20px; font-weight: 700; color: #003B6F; }
+    .stat-card .label { font-size: 11px; color: #666; margin-top: 2px; }
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+      margin-bottom: 8px;
+    }
+    .btn-primary { background: #003B6F; color: white; }
+    .btn-accent { background: #FF6600; color: white; }
+    .btn-outline { background: transparent; color: #003B6F; border: 1px solid #E0E0E0; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="logo">M</div>
+    <h1>MachMalTag</h1>
+  </div>
+  <div class="content">
+    <div class="status abgemeldet" id="status">
+      Nicht angemeldet
+    </div>
+    <div class="stat-grid">
+      <div class="stat-card">
+        <div class="wert" id="stat-heute">—</div>
+        <div class="label">Geprüft heute</div>
+      </div>
+      <div class="stat-card">
+        <div class="wert" id="stat-marge">—</div>
+        <div class="label">Ø Marge</div>
+      </div>
+    </div>
+    <a href="https://machmaltag.vercel.app/login" target="_blank" class="btn btn-primary">
+      Anmelden
+    </a>
+    <a href="https://machmaltag.vercel.app/rechner" target="_blank" class="btn btn-accent">
+      Rechner öffnen
+    </a>
+    <a href="https://machmaltag.vercel.app/dashboard" target="_blank" class="btn btn-outline">
+      Dashboard
+    </a>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+{
+  "manifest_version": 3,
+  "name": "MachMalTag Rentabilitäts-Rechner",
+  "version": "1.0.0",
+  "description": "Rentabilitäts-Berechnung für TimoCom-Frachtangebote in Echtzeit",
+  "permissions": [
+    "storage",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "https://*.timocom.com/*",
+    "https://*.timocom.de/*"
+  ],
+  "background": {
+    "service_worker": "hintergrund.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.timocom.com/*",
+        "https://*.timocom.de/*"
+      ],
+      "js": ["inhalt.js"],
+      "css": ["inhalt.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "MachMalTag",
+    "default_icon": {
+      "16": "icon-16.png",
+      "32": "icon-32.png",
+      "48": "icon-48.png",
+      "128": "icon-128.png"
+    }
+  },
+  "options_page": "optionen.html",
+  "icons": {
+    "16": "icon-16.png",
+    "32": "icon-32.png",
+    "48": "icon-48.png",
+    "128": "icon-128.png"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["inhalt.css", "overlay-assets/*"],
+      "matches": ["https://*.timocom.com/*", "https://*.timocom.de/*"]
+    }
+  ]
+}

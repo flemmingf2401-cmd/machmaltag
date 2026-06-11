@@ -17,7 +17,7 @@ const buttonVariants = cva(
         ghost:
           'bg-transparent text-text-secondary hover:bg-bg-subtle',
         danger:
-          'bg-error text-white hover:bg-red-700 shadow-sm',
+          'bg-error text-white hover:bg-error-dark shadow-sm',
         outline:
           'border border-border bg-transparent text-text-primary hover:bg-bg-subtle',
       },

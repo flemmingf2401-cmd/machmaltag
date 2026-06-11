@@ -1,0 +1,8 @@
+{
+  "extends": "./tsconfig.app.json",
+  "compilerOptions": {
+    "types": ["vite/client", "chrome"],
+    "lib": ["ES2023", "DOM", "WebWorker"]
+  },
+  "include": ["src/erweiterung/**/*", "src/geteilt/**/*"]
+}

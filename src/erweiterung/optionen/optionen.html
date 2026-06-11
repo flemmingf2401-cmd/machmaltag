@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>MachMalTag — Einstellungen</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: #F5F5F5;
+      color: #333;
+      padding: 32px;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+    h1 { font-size: 24px; font-weight: 700; color: #003B6F; margin-bottom: 24px; }
+    h2 { font-size: 16px; font-weight: 600; margin: 24px 0 12px; color: #333; }
+    .card {
+      background: white;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 2px 8px rgba(0, 59, 111, 0.08);
+      margin-bottom: 16px;
+    }
+    .feld { margin-bottom: 12px; }
+    .feld label {
+      display: block;
+      font-size: 13px;
+      font-weight: 500;
+      color: #666;
+      margin-bottom: 4px;
+    }
+    .feld input {
+      width: 100%;
+      padding: 8px 12px;
+      border: 1px solid #E0E0E0;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+    .feld input:focus {
+      outline: none;
+      border-color: #003B6F;
+      box-shadow: 0 0 0 3px rgba(0, 59, 111, 0.15);
+    }
+    .btn {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      background: #003B6F;
+      color: white;
+    }
+    .btn:hover { background: #00264D; }
+    .hinweis {
+      background: #FFF3E6;
+      border: 1px solid #FF6600;
+      border-radius: 6px;
+      padding: 12px;
+      font-size: 13px;
+      color: #E65C00;
+      margin-bottom: 16px;
+    }
+  </style>
+</head>
+<body>
+  <h1>🧮 MachMalTag Einstellungen</h1>
+
+  <div class="hinweis">
+    Die vollständige Verwaltung der Kostenkennzahlen erfolgt in der
+    <a href="https://machmaltag.vercel.app/rechner" target="_blank" style="color: #003B6F; font-weight: 600;">MachMalTag Web-App</a>.
+    Hier kannst du die Supabase-Verbindung konfigurieren.
+  </div>
+
+  <div class="card">
+    <h2>Supabase-Verbindung</h2>
+    <div class="feld">
+      <label for="supabase-url">Supabase URL</label>
+      <input type="url" id="supabase-url" placeholder="https://xxx.supabase.co">
+    </div>
+    <div class="feld">
+      <label for="supabase-key">Anon Key</label>
+      <input type="text" id="supabase-key" placeholder="eyJhbGciOi...">
+    </div>
+    <button class="btn" id="save-btn">Speichern</button>
+  </div>
+
+  <div class="card">
+    <h2>Erweiterung</h2>
+    <p style="font-size: 13px; color: #666;">
+      Version 1.0.0 •
+      <a href="https://machmaltag.vercel.app" target="_blank" style="color: #003B6F;">Web-App öffnen</a> •
+      <a href="https://github.com/flemmingf2401-cmd/machmaltag" target="_blank" style="color: #003B6F;">GitHub</a>
+    </p>
+  </div>
+
+  <script src="optionen.js"></script>
+</body>
+</html>

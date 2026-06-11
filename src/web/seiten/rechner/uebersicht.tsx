@@ -10,6 +10,9 @@ import { Label } from '@/komponenten/ui'
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/komponenten/ui'
 import { Badge } from '@/komponenten/ui'
 import { Container } from '@/komponenten/ui'
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@/komponenten/ui/select'
+import { useToast } from '@/komponenten/ui/toast'
+import { Copy } from 'lucide-react'
 
 // Demo-Profil für sofortige Nutzung ohne Supabase
 const DEMO_PROFIL: KostenvorlageWerte = {
@@ -31,6 +34,8 @@ const DEMO_PROFIL: KostenvorlageWerte = {
 }
 
 function RechnerUebersicht() {
+  const { toastHinzufuegen } = useToast()
+
   // Eingabefelder
   const [ladeort, setLadeort] = useState('')
   const [entladeort, setEntladeort] = useState('')
@@ -115,6 +120,36 @@ function RechnerUebersicht() {
     : ergebnis?.bewertung === 'grenzwertig'
       ? 'Grenzwertig'
       : 'Verlust'
+
+  // Ergebnis als Text kopieren
+  const ergebnisKopieren = useCallback(() => {
+    if (!ergebnis) return
+
+    const bewertungLabel =
+      ergebnis.bewertung === 'profitabel' ? 'Profitabel' :
+      ergebnis.bewertung === 'grenzwertig' ? 'Grenzwertig' : 'Verlust'
+
+    const text = [
+      `MachMalTag – Rentabilitätsprüfung`,
+      `${ladeort || '—'} → ${entladeort || '—'}`,
+      `Distanz: ${distanzKm} km | Preis: ${formatiereWaehrung(preisEur)}`,
+      `Fahrzeug: ${FAHRZEUGTYPEN[fahrzeugtyp].bezeichnung}`,
+      ``,
+      `Bewertung: ${bewertungLabel}`,
+      `Marge: ${ergebnis.margeEur >= 0 ? '+' : ''}${formatiereWaehrung(ergebnis.margeEur)} (${formatiereProzent(ergebnis.margeProzent)})`,
+      `Kosten gesamt: ${formatiereWaehrung(ergebnis.kostenGesamtEur)}`,
+      `  Diesel: ${formatiereWaehrung(ergebnis.kostentreiber.diesel.betragEur)}`,
+      `  Fahrer: ${formatiereWaehrung(ergebnis.kostentreiber.fahrer.betragEur)}`,
+      `  Maut: ${formatiereWaehrung(ergebnis.kostentreiber.maut.betragEur)}`,
+      `  Fixkosten: ${formatiereWaehrung(ergebnis.kostentreiber.fixkosten.betragEur)}`,
+    ].join('\n')
+
+    navigator.clipboard.writeText(text).then(() => {
+      toastHinzufuegen({ beschreibung: 'Ergebnis in die Zwischenablage kopiert', art: 'success' })
+    }).catch(() => {
+      toastHinzufuegen({ beschreibung: 'Kopieren fehlgeschlagen', art: 'error' })
+    })
+  }, [ergebnis, ladeort, entladeort, distanzKm, preisEur, fahrzeugtyp, toastHinzufuegen])
 
   return (
     <section className="py-12 bg-bg-subtle min-h-[80vh]">
@@ -203,18 +238,21 @@ function RechnerUebersicht() {
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="fahrzeug">Fahrzeugtyp</Label>
-                    <select
-                      id="fahrzeug"
-                      className="flex h-11 w-full rounded-md border border-border bg-white px-3 py-2 text-sm text-text-primary"
+                    <Select
                       value={fahrzeugtyp}
-                      onChange={(e) => setFahrzeugtyp(e.target.value as 'sattelzug' | 'zugmaschine')}
+                      onValueChange={(wert) => setFahrzeugtyp(wert as 'sattelzug' | 'zugmaschine')}
                     >
-                      {Object.values(FAHRZEUGTYPEN).map((ft) => (
-                        <option key={ft.schluessel} value={ft.schluessel}>
-                          {ft.bezeichnung}
-                        </option>
-                      ))}
-                    </select>
+                      <SelectTrigger id="fahrzeug">
+                        <SelectValue placeholder="Fahrzeug wählen" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {Object.values(FAHRZEUGTYPEN).map((ft) => (
+                          <SelectItem key={ft.schluessel} value={ft.schluessel}>
+                            {ft.bezeichnung}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                   </div>
                 </div>
 
@@ -264,6 +302,7 @@ function RechnerUebersicht() {
                     max={100}
                     value={leerkilometerAnteil * 100}
                     onChange={(e) => setLeerkilometerAnteil(Number(e.target.value) / 100)}
+                    aria-valuetext={`${Math.round(leerkilometerAnteil * 100)}% Leerkilometer`}
                     className="w-full accent-primary"
                   />
                   <div className="flex justify-between text-xs text-text-secondary">
@@ -374,8 +413,9 @@ function RechnerUebersicht() {
                     </div>
                   </CardContent>
                   <CardFooter>
-                    <Button variant="accent" className="w-full">
-                      In Historie speichern
+                    <Button variant="accent" className="w-full" onClick={ergebnisKopieren}>
+                      <Copy className="h-4 w-4 mr-2" />
+                      Ergebnis kopieren
                     </Button>
                   </CardFooter>
                 </Card>

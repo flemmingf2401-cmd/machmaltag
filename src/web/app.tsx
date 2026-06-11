@@ -1,22 +1,52 @@
 import { Routes, Route } from 'react-router-dom'
 import { Layout } from '@/komponenten/layout'
+import { ToastProvider, ToastViewport, ToastKontextProvider, Toast as ToastKomponente, ToastTitle, ToastDescription, ToastClose } from '@/komponenten/ui'
+import { useToast } from '@/komponenten/ui/toast'
 import { Startseite } from './seiten/startseite'
 import { LoginSeite } from './seiten/login'
 import { RechnerUebersicht } from './seiten/rechner/uebersicht'
 import { Tagesstatistik } from './seiten/dashboard/tagesstatistik'
 import { Historie } from './seiten/dashboard/historie'
 
+/** Toast-Renderer – hört auf den ToastKontextProvider und zeigt Toasts an */
+function ToastRenderer() {
+  const { toasts, toastEntfernen } = useToast()
+
+  return (
+    <ToastProvider swipeDirection="right">
+      {toasts.map((toast, index) => (
+        <ToastKomponente
+          key={index}
+          variant={toast.art}
+          duration={toast.dauer ?? 4000}
+          onOpenChange={(offen) => { if (!offen) toastEntfernen() }}
+        >
+          <div className="grid gap-1">
+            {toast.titel && <ToastTitle>{toast.titel}</ToastTitle>}
+            <ToastDescription>{toast.beschreibung}</ToastDescription>
+          </div>
+          <ToastClose />
+        </ToastKomponente>
+      ))}
+      <ToastViewport />
+    </ToastProvider>
+  )
+}
+
 function App() {
   return (
-    <Layout>
-      <Routes>
-        <Route path="/" element={<Startseite />} />
-        <Route path="/login" element={<LoginSeite />} />
-        <Route path="/rechner" element={<RechnerUebersicht />} />
-        <Route path="/dashboard" element={<Tagesstatistik />} />
-        <Route path="/dashboard/historie" element={<Historie />} />
-      </Routes>
-    </Layout>
+    <ToastKontextProvider>
+      <Layout>
+        <Routes>
+          <Route path="/" element={<Startseite />} />
+          <Route path="/login" element={<LoginSeite />} />
+          <Route path="/rechner" element={<RechnerUebersicht />} />
+          <Route path="/dashboard" element={<Tagesstatistik />} />
+          <Route path="/dashboard/historie" element={<Historie />} />
+        </Routes>
+      </Layout>
+      <ToastRenderer />
+    </ToastKontextProvider>
   )
 }
 

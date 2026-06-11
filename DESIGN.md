@@ -26,6 +26,7 @@
 | **Dark Navy**    | `#00264D` | `--color-primary-dark`    | Hover/Active Zustände, Footer              |
 | **Light Blue**   | `#E8F0F8` | `--color-primary-light`   | Hellere Hintergründe, Cards               |
 | **Light Orange** | `#FFF3E6` | `--color-accent-light`    | Warnhinweise, Badge-Hintergründe          |
+| **Accent Glow**  | `rgba(255,102,0,0.08)` | `--color-accent-glow` | Subtile Orange-Hintergründe, CTA-Sektionen |
 | **Dark Gray**    | `#333333` | `--color-text-primary`    | Fließtext, Überschriften                  |
 | **Medium Gray**  | `#666666` | `--color-text-secondary`  | Untertitel, Beschreibungen                |
 | **Light Gray**   | `#F5F5F5` | `--color-bg-subtle`       | Seitenhintergrund, Section-Wechsel        |
@@ -38,6 +39,7 @@
 | **Success** | `#28A745` | `--color-success`      | Bestätigungen, OK   |
 | **Warning** | `#FFC107` | `--color-warning`      | Warnungen           |
 | **Error**   | `#DC3545` | `--color-error`        | Fehler, Validierung |
+| **Error Dark**| `#C82333` | `--color-error-dark` | Error Hover         |
 | **Info**    | `#17A2B8` | `--color-info`         | Hinweise            |
 
 ---
@@ -127,10 +129,10 @@
 
 - Background: `#FFFFFF`
 - Border: `1px solid #E0E0E0`
-- Border-Radius: `8px` (`rounded-lg`)
+- Border-Radius: `12px` (`rounded-xl`)
 - Shadow: `0 2px 8px rgba(0, 59, 111, 0.08)`
-- Padding: `24px`
-- Hover: Shadow `0 4px 16px rgba(0, 59, 111, 0.12)`
+- Padding: `24px` (Mobile) / `32px` (Desktop)
+- Hover: Shadow `0 4px 16px rgba(0, 59, 111, 0.12)`, leichtes Anheben `translate-y(-2px)`
 
 ### Inputs
 
@@ -148,8 +150,79 @@
 | **Warning**| `#FFF3E6`   | `#CC5200`  |
 | **Success**| `#E8F5E9`   | `#28A745`  |
 | **Error**  | `#FFEBEE`   | `#DC3545`  |
+| **Outline**| `transparent` | `#666666` |
 
 Border-Radius: `9999px` (`rounded-full`), Padding: `4px 12px`
+
+### Select
+
+- **Primitive:** @radix-ui/react-select
+- **Trigger:** Height `44px`, Border `1px solid #E0E0E0`, Border-Radius `6px`, ChevronDown-Icon rechts
+- **Content:** Background `#FFFFFF`, Border-Radius `6px`, Shadow `shadow-lg`, Max-Height `256px`
+- **Item:** Padding `8px 32px 8px 8px`, Focus: `#E8F0F8`, Check-Icon links
+- **Label:** Font `0.75rem`, Semibold, `#666666`
+- **Separator:** Height `1px`, Background `#E0E0E0`
+
+### Dialog
+
+- **Primitive:** @radix-ui/react-dialog
+- **Overlay:** `bg-black/80`, `backdrop-blur-sm`, animate-in fade-in
+- **Content:** `bg-white`, `rounded-xl`, `shadow-xl`, `max-w-lg`, `p-6`, animate-in zoom-in-95
+- **Header:** `mb-4`, flex-col gap-1
+- **Title:** `text-lg font-semibold text-text-primary`
+- **Description:** `text-sm text-text-secondary`
+- **Close:** X-Icon, `absolute top-4 right-4`, `text-text-secondary hover:text-text-primary`
+- **Footer:** `flex justify-end gap-3 mt-6`
+
+### Tabs
+
+- **Primitive:** @radix-ui/react-tabs
+- **List:** `bg-bg-subtle`, `rounded-md`, Height `44px`, Padding `4px`
+- **Trigger:** `rounded-sm`, Font `0.875rem font-medium`, Active: `bg-white text-text-primary shadow-sm`
+- **Content:** `mt-2`, Focus-Ring wie Standard
+
+### Separator
+
+- **Primitive:** @radix-ui/react-separator
+- **Horizontal:** Height `1px`, Background `#E0E0E0`, Width `100%`
+- **Vertical:** Width `1px`, Background `#E0E0E0`, Height `100%`
+
+### Tooltip
+
+- **Primitive:** @radix-ui/react-tooltip
+- **Content:** `bg-primary text-white`, `rounded-md`, Padding `6px 12px`, Font `0.75rem`, `shadow-lg`
+- **Arrow:** `fill-primary`
+- **Delay:** 300ms
+
+### Switch
+
+- **Primitive:** @radix-ui/react-switch
+- **Root:** Height `24px`, Width `44px`, Border-Radius `rounded-full`
+- **Off:** Background `#E0E0E0`
+- **On:** Background `#003B6F`
+- **Thumb:** Size `20px`, `rounded-full`, `bg-white`, `shadow-sm`, Translate `translate-x-5` when on
+
+### Checkbox
+
+- **Primitive:** @radix-ui/react-checkbox
+- **Root:** Size `16px`, Border-Radius `4px`, Border `1px solid #E0E0E0`
+- **Checked:** Background `#003B6F`, Check-Icon `white`
+- **Focus:** Ring `2px #003B6F/20`
+
+### DropdownMenu
+
+- **Primitive:** @radix-ui/react-dropdown-menu
+- **Content:** `bg-white`, `rounded-md`, `shadow-lg`, Padding `4px`, Min-Width `128px`
+- **Item:** Padding `8px 12px`, Border-Radius `4px`, Font `0.875rem`, Focus: `bg-primary-light`
+- **Separator:** Height `1px`, Background `#E0E0E0`, Margin `4px -4px`
+
+### Toast
+
+- **Primitive:** @radix-ui/react-toast
+- **Viewport:** Fixed bottom-right, z-100, Max-Width `420px`
+- **Varianten:** default (border/bg-white), success (border-success/30 bg-success-light), error (border-error/30 bg-error-light), warning (border-warning/30 bg-warning-light)
+- **Border-Radius:** `6px`, Shadow: `shadow-lg`
+- **Close:** X-Icon, `absolute right-1 top-1`
 
 ---
 
@@ -237,7 +310,40 @@ Dark Mode Palette (für spätere Implementierung):
 
 ---
 
-## 12. Referenz-Links
+## 12. Stil-Richtlinie: Modern / Frisch
+
+> Die MachMalTag-App verfolgt einen **modernen, frischen** Stil auf Basis der TIMOCOM CI.
+> Orange wird mutiger eingesetzt, Weißraum großzügiger, Typografie kompakter.
+
+### Orange-Akzente verstaerken
+
+- Orange `#FF6600` als auffaelliger Akzent fuer CTAs, Highlights, Ergebnis-Hervorhebung
+- `accent-glow` fuer subtile Orange-Hintergruende in CTA-Sektionen und hervorgehobenen Bereichen
+- Ergebnis-Card im Rechner: `border-l-4 border-l-accent` als Markierung
+- Schritt-Kreise: Orange-Gradient `bg-gradient-to-br from-accent to-accent-dark`
+
+### Typografie frischer nutzen
+
+- Alle Ueberschriften ab H2 nutzen `tracking-tight` fuer kompakteren, moderneren Look
+- Display/H1: `letter-spacing: -0.02em` (bereits als Token definiert)
+- Hero-Ueberschriften: `tracking-tight` explizit setzen
+
+### Mehr Weißraum
+
+- Section-Abstaende: `py-24 lg:py-32` statt `py-20`
+- Card-Gap im Grid: `gap-8` statt `gap-6`
+- Card-Padding: `24px` (Mobile) / `32px` (Desktop)
+- Card-Border-Radius: `12px` (`rounded-xl`) statt `8px` (`rounded-lg`)
+
+### Cards frischer
+
+- Border-Radius: `12px` (`rounded-xl`)
+- Hover: Subtiles Anheben `hover:-translate-y-0.5` + `hover:shadow-lg`
+- Orange-Accent-Line: Optionales `border-t-2 border-t-accent` fuer hervorgehobene Cards
+
+---
+
+## 13. Referenz-Links
 
 - [TIMOCOM Brand Portal](https://brand.timocom.com/) – Offizielle Brand-Richtlinien
 - [Inter Font](https://rsms.me/inter/) – Fallback-Font

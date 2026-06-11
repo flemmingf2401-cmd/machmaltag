@@ -60,3 +60,4 @@ export {
   type ToastArt,
   type ToastNachricht,
 } from './toast'
+export { Testimonials, type Referenz } from './testimonials'

@@ -13,7 +13,7 @@ import { Container } from '@/komponenten/ui'
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@/komponenten/ui/select'
 import { Separator } from '@/komponenten/ui/separator'
 import { useToast } from '@/komponenten/ui/toast'
-import { Copy, AlertCircle, CheckCircle2, Loader2 } from 'lucide-react'
+import { Copy, AlertCircle, CheckCircle2, Loader2, Fuel, User, Route, Wrench } from 'lucide-react'
 
 /** Icon je Kostentreiber-Kategorie */
 function KostentreiberIcon({ bezeichnung }: { bezeichnung: string }) {

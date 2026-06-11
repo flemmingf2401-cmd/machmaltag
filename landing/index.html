@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FreightLens — Frachtangebote sofort auf Rentabilität prüfen</title>
+  <meta name="description" content="Bewerte Frachtangebote in 3 Sekunden: Marge, Kosten, Marktwert — direkt in deinem Browser. Kostenlos während Beta.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="nav__inner">
+      <a href="#" class="nav__logo">
+        <span class="nav__logo-icon">🔍</span>
+        FreightLens
+      </a>
+      <ul class="nav__links" id="nav-links">
+        <li><a href="#features">Features</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#warteliste" class="nav__cta">Kostenlos testen</a></li>
+      </ul>
+      <button class="nav__hamburger" id="hamburger" aria-label="Menü öffnen">☰</button>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero" id="hero">
+    <div class="container">
+      <div class="hero__grid">
+        <div class="hero__inhalt">
+          <h1 class="hero__headline">
+            Du siehst auf jedem Frachtangebot sofort: <span>rentabel</span> oder Verlust.
+          </h1>
+          <p class="hero__subline">
+            Spare 23 Minuten täglich. FreightLens bewertet jedes TIMOCOM-Angebot
+            in Echtzeit — mit deinen echten Kosten, deiner echten Marge.
+          </p>
+          <form class="hero__form" id="hero-form">
+            <input
+              class="hero__input"
+              type="email"
+              placeholder="Deine E-Mail-Adresse"
+              required
+              aria-label="E-Mail-Adresse eingeben"
+            >
+            <button class="hero__btn" type="submit">Kostenlos starten</button>
+          </form>
+        </div>
+
+        <!-- CSS-Mockup des Sidebar-Panels -->
+        <div class="hero__mockup animate-on-scroll">
+          <div class="mockup__header">
+            <span class="mockup__dot mockup__dot--red"></span>
+            <span class="mockup__dot mockup__dot--amber"></span>
+            <span class="mockup__dot mockup__dot--green"></span>
+          </div>
+
+          <div class="mockup__karte">
+            <span class="mockup__route">Hamburg → München</span>
+            <span class="mockup__badge mockup__badge--green">✓ +8,3 %</span>
+          </div>
+
+          <div class="mockup__karte">
+            <span class="mockup__route">Berlin → Frankfurt</span>
+            <span class="mockup__badge mockup__badge--amber">⚠ +2,1 %</span>
+          </div>
+
+          <div class="mockup__karte">
+            <span class="mockup__route">Köln → Wien</span>
+            <span class="mockup__badge mockup__badge--red">✗ −4,7 %</span>
+          </div>
+
+          <div class="mockup__karte">
+            <span class="mockup__route">Düsseldorf → Stuttgart</span>
+            <span class="mockup__badge mockup__badge--green">✓ +15,2 %</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Social Proof -->
+  <section class="section section--gray" id="social-proof">
+    <div class="container">
+      <div class="social-proof__grid animate-on-scroll">
+        <div class="social-proof__karte">
+          <div class="social-proof__wert">23 Min</div>
+          <div class="social-proof__label">gespart pro Tag</div>
+        </div>
+        <div class="social-proof__karte">
+          <div class="social-proof__wert">+8 %</div>
+          <div class="social-proof__label">höhere Ø-Marge</div>
+        </div>
+        <div class="social-proof__karte">
+          <div class="social-proof__wert">500+</div>
+          <div class="social-proof__label">Disponenten auf Warteliste</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Problem → Lösung -->
+  <section class="section" id="problem">
+    <div class="container">
+      <div class="probleme-loesung__grid animate-on-scroll">
+        <div class="probleme-loesung__karte probleme-loesung__karte--problem">
+          <h2 class="probleme-loesung__titel">Ohne FreightLens</h2>
+          <ul class="probleme-loesung__liste">
+            <li>40 Angebote öffnen, 10 manuell im Kopf rechnen, 3 annehmen</li>
+            <li>Hättest du das profitabelste gewählt? Weißt du nicht.</li>
+            <li>Excel-Kopfrechnerei — Fehlerquote 15 %</li>
+            <li>Verlust-Routen erst im Nachhinein erkannt</li>
+            <li>Jede Minute, die du rechnest, fehlt bei der Akquise</li>
+          </ul>
+        </div>
+        <div class="probleme-loesung__karte probleme-loesung__karte--loesung">
+          <h2 class="probleme-loesung__titel">Mit FreightLens</h2>
+          <ul class="probleme-loesung__liste">
+            <li>Ampel-Badge auf jedem Angebot: grün, gelb, rot — in 3 Sekunden</li>
+            <li>Deine GuV, deine Marge — kein Branchenschnitt</li>
+            <li>Kosten aufgeschlüsselt: Diesel, Fahrer, Maut, Fixkosten</li>
+            <li>Verlust-Angebote sofort erkannt, bevor du anfragst</li>
+            <li>Geschätzter Marktwert-Vergleich: Overpaying erkannt</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Feature-Highlights -->
+  <section class="section section--gray" id="features">
+    <div class="container">
+      <div class="features__grid animate-on-scroll">
+
+        <div class="feature-karte">
+          <div class="feature-karte__icon">🚦</div>
+          <h3 class="feature-karte__titel">Echtzeit-Ampel</h3>
+          <p class="feature-karte__text">
+            Sofort-Badge auf jedem TIMOCOM-Angebot: Grün (profitabel), Gelb (grenzwertig), Rot (Verlust) —
+            inklusive Marge in % und Euro. Kein Extra-Klick nötig.
+          </p>
+        </div>
+
+        <div class="feature-karte">
+          <div class="feature-karte__icon">💰</div>
+          <h3 class="feature-karte__titel">Deine GuV, deine Marge</h3>
+          <p class="feature-karte__text">
+            Kein Branchendurchschnitt — FreightLens rechnet mit deinen echten Kosten:
+            Diesel, Fahrer, Maut, Fixkosten. Basis: dein persönliches Kostenprofil.
+          </p>
+        </div>
+
+        <div class="feature-karte">
+          <div class="feature-karte__icon">📊</div>
+          <h3 class="feature-karte__titel">Historie & Marktwert</h3>
+          <p class="feature-karte__text">
+            500 bewertete Angebote lokal gespeichert. Tagesstatistik, Ø-Marge,
+            und geschätzter Marktwert-Vergleich — damit du weißt, ob der Preis passt.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section class="section" id="pricing">
+    <div class="container">
+      <div class="pricing__grid animate-on-scroll">
+
+        <div class="pricing-karte">
+          <div class="pricing-karte__name">Free</div>
+          <div class="pricing-karte__preis">0 €</div>
+          <div class="pricing-karte__preis-einheit">während Beta unbegrenzt</div>
+          <ul class="pricing-karte__features">
+            <li>Grundkostenprofil</li>
+            <li>Unbegrenzte Bewertungen</li>
+            <li>Ampel-Badge auf TIMOCOM</li>
+            <li>Tagesstatistik</li>
+          </ul>
+        </div>
+
+        <div class="pricing-karte pricing-karte--empfohlen">
+          <div class="pricing-karte__badge">Empfohlen</div>
+          <div class="pricing-karte__name">Pro</div>
+          <div class="pricing-karte__preis">29 €</div>
+          <div class="pricing-karte__preis-einheit">pro Monat</div>
+          <ul class="pricing-karte__features">
+            <li>Alles aus Free</li>
+            <li>Eigenes Kostenprofil</li>
+            <li>500 Einträge Historie</li>
+            <li>Geschätzter Marktwert</li>
+            <li>Side Panel mit Details</li>
+          </ul>
+        </div>
+
+        <div class="pricing-karte">
+          <div class="pricing-karte__name">Team</div>
+          <div class="pricing-karte__preis">79 €</div>
+          <div class="pricing-karte__preis-einheit">pro Monat (5 Seats)</div>
+          <ul class="pricing-karte__features">
+            <li>Alles aus Pro</li>
+            <li>5 Nutzer-Sitze</li>
+            <li>Geteilte Kostenstruktur</li>
+            <li>Team-Dashboard</li>
+            <li>Export-Funktion</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer CTA -->
+  <section class="section section--blue" id="warteliste">
+    <div class="container">
+      <div class="footer-cta__inner animate-on-scroll">
+        <h2 class="footer-cta__headline">Start jetzt — dein erstes Angebot in 60 Sekunden bewertet.</h2>
+        <p class="footer-cta__text">
+          Kostenlos während Beta. Keine Kreditkarte. Kein Risiko.
+        </p>
+        <form class="footer-cta__form" id="footer-form">
+          <input
+            class="footer-cta__input"
+            type="email"
+            placeholder="Deine E-Mail-Adresse"
+            required
+            aria-label="E-Mail-Adresse eingeben"
+          >
+          <button class="footer-cta__btn" type="submit">Jetzt anmelden</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__inner">
+        <span>© 2026 FreightLens</span>
+        <div class="footer__links">
+          <a href="#">Impressum</a>
+          <a href="#">Datenschutz</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Erfolgs-Overlay (Konfetti) -->
+  <div class="erfolg-overlay" id="erfolg-overlay">
+    <div class="erfolg-text">
+      <div class="erfolg-text__icon">🎉</div>
+      <h3 class="erfolg-text__titel">Du bist auf der Liste!</h3>
+      <p class="erfolg-text__subtext">Wir melden uns, wenn die Beta startet.</p>
+    </div>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>

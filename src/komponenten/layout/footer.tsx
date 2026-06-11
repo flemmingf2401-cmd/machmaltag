@@ -12,12 +12,12 @@ const Footer = React.forwardRef<
     className={cn('border-t border-border bg-primary-dark text-white', className)}
     {...props}
   >
-    <Container className="py-12">
+    <Container className="py-16">
       <div className="grid gap-8 md:grid-cols-3">
         {/* Marken-Spalte */}
         <div>
           <div className="flex items-center gap-3 mb-4">
-            <div className="flex h-9 w-9 items-center justify-center rounded-md bg-accent text-white font-bold text-sm">
+            <div className="flex h-9 w-9 items-center justify-center rounded-md bg-gradient-to-br from-accent to-accent-dark text-white font-bold text-sm">
               M
             </div>
             <span className="text-lg font-semibold">MachMalTag</span>
@@ -51,7 +51,7 @@ const Footer = React.forwardRef<
         </div>
       </div>
 
-      <div className="mt-8 pt-8 border-t border-white/10 text-center text-xs text-white/50">
+      <div className="mt-10 pt-8 border-t border-white/15 text-center text-xs text-white/50">
         © {new Date().getFullYear()} MachMalTag. Alle Rechte vorbehalten.
       </div>
     </Container>

@@ -1,8 +1,73 @@
 import { Link } from 'react-router-dom'
-import { Button } from '@/komponenten/ui'
-import { Card, CardHeader, CardTitle, CardDescription } from '@/komponenten/ui'
-import { Container } from '@/komponenten/ui'
+import { Button, Card, CardHeader, CardTitle, CardDescription, Container, Testimonials } from '@/komponenten/ui'
+import type { Referenz } from '@/komponenten/ui'
 import { Calculator, TrendingUp, Clock, AlertTriangle, CheckCircle, ArrowRight, MapPin, Eye, BarChart3 } from 'lucide-react'
+
+const kundenstimmen: Referenz[] = [
+  {
+    bild: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=256&auto=format&fit=crop',
+    name: 'Markus Schneider',
+    benutzername: '@m.schneider_sped',
+    text: 'Endlich keine Excel-Kopfrechnerei mehr. Ich gebe die Angebotsdaten ein und sehe sofort, ob sich die Fahrt lohnt.',
+    socialUrl: 'https://twitter.com',
+  },
+  {
+    bild: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=256&auto=format&fit=crop',
+    name: 'Sandra Weber',
+    benutzername: '@sandra_disp',
+    text: 'Seit ich den MachMalTag nutze, habe ich deutlich weniger Verlustfahrten. Die Marge-Berechnung ist ein Gamechanger.',
+    socialUrl: 'https://twitter.com',
+  },
+  {
+    bild: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=256&auto=format&fit=crop',
+    name: 'Thomas Braun',
+    benutzername: '@t.braun_logistik',
+    text: 'Früher habe ich oft Blindbids abgegeben. Jetzt prüfe ich jedes Angebot in Sekunden und entscheide fundiert.',
+    socialUrl: 'https://twitter.com',
+  },
+  {
+    bild: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=256&auto=format&fit=crop',
+    name: 'Katrin Fischer',
+    benutzername: '@k.fischer_trans',
+    text: 'Die farbcodierte Bewertung hilft mir auf einen Blick zu sehen: grün = nehmen, rot = lassen. Extrem intuitiv.',
+    socialUrl: 'https://twitter.com',
+  },
+  {
+    bild: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=256&auto=format&fit=crop',
+    name: 'Stefan Müller',
+    benutzername: '@s.mueller_fleet',
+    text: 'Unsere Disponenten sparen jetzt pro Tag 30 Minuten Rechenzeit. Das summiert sich auf den ganzen Monat enorm.',
+    socialUrl: 'https://twitter.com',
+  },
+  {
+    bild: 'https://images.unsplash.com/photo-1534528741775-53994a2da032?q=80&w=256&auto=format&fit=crop',
+    name: 'Lisa Hoffmann',
+    benutzername: '@l.hoffmann_cargo',
+    text: 'Ich nutze den Rechner täglich auf der TimoCom-Plattform. Kein Kontextwechsel, alles in einem Workflow.',
+    socialUrl: 'https://twitter.com',
+  },
+  {
+    bild: 'https://images.unsplash.com/photo-1599566150163-a29178d56e3c?q=80&w=256&auto=format&fit=crop',
+    name: 'Jörg Krause',
+    benutzername: '@j.krause_spedition',
+    text: 'Die Kostenaufschlüsselung ist detailliert und transparent. So kann ich dem Chef jede Entscheidung begründen.',
+    socialUrl: 'https://twitter.com',
+  },
+  {
+    bild: 'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?q=80&w=256&auto=format&fit=crop',
+    name: 'Anna Richter',
+    benutzername: '@a.richter_dispatch',
+    text: 'Vormals habe ich gute Angebote verpasst, weil ich zu lange gerechnet habe. Jetzt entscheide ich in Echtzeit.',
+    socialUrl: 'https://twitter.com',
+  },
+  {
+    bild: 'https://images.unsplash.com/photo-1496440737103-cd00c3b29e7e?q=80&w=256&auto=format&fit=crop',
+    name: 'Daniel Lang',
+    benutzername: '@d.lang_gueter',
+    text: 'Der MachMalTag ist aus meinem Arbeitsalltag nicht mehr wegzudenken. Marge vorher wissen – einfach genial.',
+    socialUrl: 'https://twitter.com',
+  },
+]
 
 function Startseite() {
   return (
@@ -139,6 +204,13 @@ function Startseite() {
               </p>
             </div>
           </div>
+        </Container>
+      </section>
+
+      {/* Kundenstimmen Section */}
+      <section className="py-24 lg:py-32 bg-bg-subtle">
+        <Container>
+          <Testimonials referenzen={kundenstimmen} titel="Kundenstimmen" />
         </Container>
       </section>
 

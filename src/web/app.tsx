@@ -1,6 +1,6 @@
 import { Routes, Route } from 'react-router-dom'
 import { Layout } from '@/komponenten/layout'
-import { ToastProvider, ToastViewport, ToastKontextProvider, Toast as ToastKomponente, ToastTitle, ToastDescription, ToastClose } from '@/komponenten/ui'
+import { ToastProvider, ToastViewport, ToastKontextProvider, Toast as ToastKomponente, ToastTitle, ToastDescription, ToastClose, TooltipProvider } from '@/komponenten/ui'
 import { useToast } from '@/komponenten/ui/toast'
 import { Startseite } from './seiten/startseite'
 import { LoginSeite } from './seiten/login'
@@ -36,15 +36,17 @@ function ToastRenderer() {
 function App() {
   return (
     <ToastKontextProvider>
-      <Layout>
-        <Routes>
-          <Route path="/" element={<Startseite />} />
-          <Route path="/login" element={<LoginSeite />} />
-          <Route path="/rechner" element={<RechnerSeite />} />
-          <Route path="/dashboard" element={<Tagesstatistik />} />
-          <Route path="/dashboard/historie" element={<Historie />} />
-        </Routes>
-      </Layout>
+      <TooltipProvider delayDuration={300}>
+        <Layout>
+          <Routes>
+            <Route path="/" element={<Startseite />} />
+            <Route path="/login" element={<LoginSeite />} />
+            <Route path="/rechner" element={<RechnerSeite />} />
+            <Route path="/dashboard" element={<Tagesstatistik />} />
+            <Route path="/dashboard/historie" element={<Historie />} />
+          </Routes>
+        </Layout>
+      </TooltipProvider>
       <ToastRenderer />
     </ToastKontextProvider>
   )

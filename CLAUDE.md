@@ -9,9 +9,9 @@
 ## Design
 
 - **Strikt nach [DESIGN.md](DESIGN.md)** – Farben, Typografie, Spacing, Komponenten, Icons, Schatten, Animationen und Barrierefreiheit wie dort definiert
-- TimoCom Corporate Identity als Grundlage (TimoCom Blue `#003B6F`, TimoCom Orange `#FF6600`)
+- TIMOCOM Corporate Identity als Grundlage (TIMOCOM Blue `#003B6F`, TIMOCOM Orange `#FF6600`)
 - Icons: Lucide Icons
-- Font: Inter (Fallback für TimoCom Headline)
+- Font: Inter (Fallback für TIMOCOM Headline)
 - Light Mode zuerst, Dark Mode vorläufig nicht implementiert
 
 ## Arbeitsweise

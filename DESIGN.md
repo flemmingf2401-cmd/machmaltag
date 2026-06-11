@@ -1,7 +1,10 @@
 # MachMalTag – Design-Richtlinien
 
-> **Basierend auf der TimoCom Corporate Identity** ([brand.timocom.com](https://brand.timocom.com/))
-> Die folgenden Richtlinien orientieren sich an den TimoCom Brand Guidelines.
+> **Wichtig: Markenname stets als TIMOCOM schreiben** – keine andere Schreibweise (z.B. TimoCom, Timocom, timocom).
+> Dies gilt konsistent für alle Texte, Labels, Farben, Kommentare und Dokumentation.
+
+> **Basierend auf der TIMOCOM Corporate Identity** ([brand.timocom.com](https://brand.timocom.com/))
+> Die folgenden Richtlinien orientieren sich an den TIMOCOM Brand Guidelines.
 > Sobald die exakten Werte von brand.timocom.com verfügbar sind, sollten diese ergänzt/korrigiert werden.
 
 ---
@@ -12,8 +15,8 @@
 
 | Name            | Hex       | CSS Variable              | Verwendung                                |
 |-----------------|-----------|---------------------------|-------------------------------------------|
-| **TimoCom Blue**  | `#003B6F` | `--color-primary`         | Primärfarbe, Header, CTA-Buttons, Links   |
-| **TimoCom Orange**| `#FF6600` | `--color-accent`          | Akzentfarbe, Hover-Zustände, Highlights    |
+| **TIMOCOM Blue**  | `#003B6F` | `--color-primary`         | Primärfarbe, Header, CTA-Buttons, Links   |
+| **TIMOCOM Orange**| `#FF6600` | `--color-accent`          | Akzentfarbe, Hover-Zustände, Highlights    |
 | **White**        | `#FFFFFF` | `--color-white`           | Hintergründe, Text auf Dark Backgrounds    |
 
 ### Sekundärfarben
@@ -45,11 +48,11 @@
 
 | Rolle         | Font Family                            | Fallback                  |
 |---------------|----------------------------------------|---------------------------|
-| **Headlines** | `TimoCom Headline` / `Inter`           | `system-ui, sans-serif`   |
+| **Headlines** | `TIMOCOM Headline` / `Inter`           | `system-ui, sans-serif`   |
 | **Body**      | `Inter`                                | `system-ui, sans-serif`   |
 | **Mono**      | `JetBrains Mono`                       | `monospace`               |
 
-> **Hinweis:** Falls TimoCom-eigene Webfonts nicht verfügbar sind, wird **Inter** als Ersatz verwendet.
+> **Hinweis:** Falls TIMOCOM-eigene Webfonts nicht verfügbar sind, wird **Inter** als Ersatz verwendet.
 > Inter ist frei verfügbar und deckt ein ähnliches Design-Spektrum ab.
 
 ### Schriftgrößen (Typographic Scale)
@@ -176,7 +179,7 @@ Border-Radius: `9999px` (`rounded-full`), Padding: `4px 12px`
 - **Slow Duration:** `300ms`
 - **Easing:** `cubic-bezier(0.4, 0, 0.2, 1)` (Tailwind Default)
 - **Hover-Transitions:** Background, Border-Color, Box-Shadow, Transform
-- **Keine heavy Animationen** – TimoCom Design ist professionell und zurückhaltend
+- **Keine heavy Animationen** – TIMOCOM Design ist professionell und zurückhaltend
 
 ---
 
@@ -236,7 +239,7 @@ Dark Mode Palette (für spätere Implementierung):
 
 ## 12. Referenz-Links
 
-- [TimoCom Brand Portal](https://brand.timocom.com/) – Offizielle Brand-Richtlinien
+- [TIMOCOM Brand Portal](https://brand.timocom.com/) – Offizielle Brand-Richtlinien
 - [Inter Font](https://rsms.me/inter/) – Fallback-Font
 - [Lucide Icons](https://lucide.dev/) – Icon-Set
 - [Radix UI](https://www.radix-ui.com/) – Accessible UI Primitives

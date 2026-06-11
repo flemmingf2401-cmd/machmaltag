@@ -1,7 +1,8 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useCallback, useRef, useEffect } from 'react'
 import { berechneRentabilitaet } from '@/geteilt/rechner/rentabilitaet'
 import type { BerechnungsEingabe, BerechnungsErgebnis, KostenvorlageWerte } from '@/geteilt/rechner/typen'
 import { FAHRZEUGTYPEN } from '@/geteilt/rechner/typen'
+import { useRoutingStore } from '@/geteilt/zustaende/routing-store'
 import { formatiereWaehrung, formatiereProzent } from '@/geteilt/helfer/utils'
 import { Button } from '@/komponenten/ui'
 import { Input } from '@/komponenten/ui'
@@ -33,31 +34,75 @@ function RechnerUebersicht() {
   // Eingabefelder
   const [ladeort, setLadeort] = useState('')
   const [entladeort, setEntladeort] = useState('')
-  const [distanzKm, setDistanzKm] = useState(800)
+  const [distanzKm, setDistanzKm] = useState(0)
   const [preisEur, setPreisEur] = useState(1200)
   const [fahrzeugtyp, setFahrzeugtyp] = useState<'sattelzug' | 'zugmaschine'>('sattelzug')
   const [leerkilometerAnteil, setLeerkilometerAnteil] = useState(0)
   const [verdraengungskostenEur, setVerdraengungskostenEur] = useState(0)
-  const [fahrzeitStunden, setFahrzeitStunden] = useState(9.5)
-  const [uebernachtungen, setUebernachtungen] = useState(1)
+  const [fahrzeitStunden, setFahrzeitStunden] = useState(0)
+  const [uebernachtungen, setUebernachtungen] = useState(0)
+
+  // Routing-Store
+  const { route, laedt: routeLaeft, fehler: routeFehler, routeBerechnen } = useRoutingStore()
+
+  // Debounced Routing: Route automatisch berechnen wenn beide Orte eingegeben sind
+  const debounceTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  const routingAusloesen = useCallback((von: string, nach: string) => {
+    if (debounceTimer.current) clearTimeout(debounceTimer.current)
+
+    debounceTimer.current = setTimeout(async () => {
+      if (von.trim().length >= 3 && nach.trim().length >= 3) {
+        const ergebnis = await routeBerechnen(von, nach)
+        if (ergebnis) {
+          setDistanzKm(ergebnis.distanzKm)
+          setFahrzeitStunden(ergebnis.fahrzeitStunden)
+          // Übernachtungen automatisch ableiten (>8.5h = 1 Nacht)
+          setUebernachtungen(ergebnis.fahrzeitStunden > 8.5 ? 1 : 0)
+        }
+      }
+    }, 800) // 800ms Debounce
+  }, [routeBerechnen])
+
+  // Debounce-Cleanup
+  useEffect(() => {
+    return () => {
+      if (debounceTimer.current) clearTimeout(debounceTimer.current)
+    }
+  }, [])
+
+  // Ladeort-Änderung
+  const handleLadeortChange = (wert: string) => {
+    setLadeort(wert)
+    routingAusloesen(wert, entladeort)
+  }
+
+  // Entladeort-Änderung
+  const handleEntladeortChange = (wert: string) => {
+    setEntladeort(wert)
+    routingAusloesen(ladeort, wert)
+  }
 
   // Berechnung ausführen
   const ergebnis: BerechnungsErgebnis | null = useMemo(() => {
     if (distanzKm <= 0 || preisEur <= 0) return null
+
+    const laender = route?.laender ?? ['DE']
+    const distanzProLand = route?.distanzProLand ?? { DE: distanzKm }
 
     const eingabe: BerechnungsEingabe = {
       distanzKm,
       leerkilometerAnteil,
       fahrzeitStunden,
       uebernachtungen,
-      laender: ['DE'],
-      distanzProLand: { DE: distanzKm },
+      laender,
+      distanzProLand,
       profil: DEMO_PROFIL,
       verdraengungskostenEur,
     }
 
     return berechneRentabilitaet(preisEur, eingabe)
-  }, [distanzKm, preisEur, leerkilometerAnteil, fahrzeitStunden, uebernachtungen, verdraengungskostenEur])
+  }, [distanzKm, preisEur, leerkilometerAnteil, fahrzeitStunden, uebernachtungen, verdraengungskostenEur, route])
 
   const bewertungFarbe = ergebnis?.bewertung === 'profitabel'
     ? 'success'
@@ -79,7 +124,7 @@ function RechnerUebersicht() {
             Rentabilitäts-Rechner
           </h1>
           <p className="text-text-secondary mt-2">
-            Prüfe sofort, ob sich ein Frachtangebot für dein Unternehmen lohnt.
+            Gib Start und Ziel ein — Distanz und Fahrzeit werden automatisch berechnet.
           </p>
         </div>
 
@@ -90,30 +135,49 @@ function RechnerUebersicht() {
               <CardHeader>
                 <CardTitle>Angebotsdaten</CardTitle>
                 <CardDescription>
-                  Gib die Daten aus dem TimoCom-Angebot ein.
+                  Gib die Daten aus dem TimoCom-Angebot ein. PLZ oder Ortsname werden automatisch geroutet.
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="ladeort">Ladeort</Label>
+                    <Label htmlFor="ladeort">Ladeort (PLZ oder Ort)</Label>
                     <Input
                       id="ladeort"
-                      placeholder="Hamburg"
+                      placeholder="20095 oder Hamburg"
                       value={ladeort}
-                      onChange={(e) => setLadeort(e.target.value)}
+                      onChange={(e) => handleLadeortChange(e.target.value)}
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="entladeort">Entladeort</Label>
+                    <Label htmlFor="entladeort">Entladeort (PLZ oder Ort)</Label>
                     <Input
                       id="entladeort"
-                      placeholder="München"
+                      placeholder="80331 oder München"
                       value={entladeort}
-                      onChange={(e) => setEntladeort(e.target.value)}
+                      onChange={(e) => handleEntladeortChange(e.target.value)}
                     />
                   </div>
                 </div>
+
+                {/* Routing-Status */}
+                {routeLaeft && (
+                  <div className="flex items-center gap-2 text-sm text-primary">
+                    <span className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-primary border-t-transparent" />
+                    Route wird berechnet…
+                  </div>
+                )}
+                {routeFehler && (
+                  <div className="rounded-md bg-warning-light p-3 text-sm text-accent-dark">
+                    ⚠️ {routeFehler} — Gib die Distanz manuell ein.
+                  </div>
+                )}
+                {route && !routeLaeft && (
+                  <div className="rounded-md bg-success-light p-3 text-sm text-success">
+                    ✅ Route berechnet: {route.distanzKm} km, ~{route.fahrzeitStunden.toFixed(1)} h Fahrzeit
+                    {route.laender.length > 1 && (` über ${route.laender.join(', ')}`)}
+                  </div>
+                )}
 
                 <div className="grid grid-cols-3 gap-4">
                   <div className="space-y-2">
@@ -122,8 +186,9 @@ function RechnerUebersicht() {
                       id="distanz"
                       type="number"
                       min={1}
-                      value={distanzKm}
+                      value={distanzKm || ''}
                       onChange={(e) => setDistanzKm(Number(e.target.value))}
+                      placeholder="Auto"
                     />
                   </div>
                   <div className="space-y-2">
@@ -161,8 +226,9 @@ function RechnerUebersicht() {
                       type="number"
                       min={0}
                       step={0.5}
-                      value={fahrzeitStunden}
+                      value={fahrzeitStunden || ''}
                       onChange={(e) => setFahrzeitStunden(Number(e.target.value))}
+                      placeholder="Auto"
                     />
                   </div>
                   <div className="space-y-2">
@@ -317,8 +383,11 @@ function RechnerUebersicht() {
             ) : (
               <Card>
                 <CardContent className="py-12 text-center">
-                  <p className="text-text-secondary">
-                    Gib Distanz und Angebotspreis ein, um die Rentabilität zu berechnen.
+                  <p className="text-text-secondary mb-4">
+                    Gib Start und Ziel ein — die Distanz wird automatisch berechnet.
+                  </p>
+                  <p className="text-xs text-text-secondary">
+                    Oder gib Distanz und Angebotspreis manuell ein.
                   </p>
                 </CardContent>
               </Card>
